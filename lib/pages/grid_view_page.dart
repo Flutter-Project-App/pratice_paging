@@ -1,21 +1,19 @@
-import 'dart:developer' as developer;
-
-import 'package:fl_paging/fl_paging.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_paging/fl_paging.dart' as paging;
 import 'package:pratice_paging/data/list_view_datasource.dart';
 import 'package:pratice_paging/data/models/note_model.dart';
 import 'package:pratice_paging/data/note_repository.dart';
-import 'package:pratice_paging/widgets/note_widget.dart';
+import 'package:pratice_paging/widgets/note_grid_widget.dart';
 
-class ListPageView extends StatefulWidget {
-  static const ROUTE_NAME = 'ListPageView';
+class GridViewPage extends StatefulWidget {
+  static const ROUTE_NAME = 'GridViewPage';
 
   @override
-  _ListPageViewState createState() => _ListPageViewState();
+  _GridViewPageState createState() => _GridViewPageState();
 }
 
-class _ListPageViewState extends State<ListPageView> {
-  static const TAG = 'ListPageView';
+class _GridViewPageState extends State<GridViewPage> {
+  static const TAG = 'GridViewPage';
   final GlobalKey key = GlobalKey();
   late ListViewDataSource dataSource;
 
@@ -27,18 +25,23 @@ class _ListPageViewState extends State<ListPageView> {
 
   @override
   Widget build(BuildContext context) {
-    developer.log('build', name: TAG);
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        title: Text('Demo ListView'),
         centerTitle: true,
+        title: Text('Demo GridView'),
       ),
-      body: PagingListView<Note>(
+      body: paging.PagingGridView<Note>(
+        emptyBuilder: (context) {
+          return Container();
+        },
         key: key,
         padding: EdgeInsets.all(16.0),
         itemBuilder: (context, data, child) {
-          return NoteWidget(data);
+          return NoteGridWidget(data);
         },
+        delegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 16),
         pageDataSource: dataSource,
       ),
     );
