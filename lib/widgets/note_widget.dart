@@ -19,7 +19,7 @@ class NoteWidget extends StatelessWidget {
             child: Text('${note.id}'),
           ),
           SizedBox(
-            height: 16.0,
+            width: 16.0,
           ),
           Expanded(
               child: Column(
